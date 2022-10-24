@@ -252,6 +252,12 @@ def inference(args, malconv, validloader):
 
 def main():
     args = parse_args()
+
+    if args.device == "xpu":
+        import intel_extension_for_pytorch
+    elif args.device == "cuda":
+        torch.backends.cuda.matmul.allow_tf32 = False
+
     seed = args.seed
 
     conf = yaml.load(open(args.config_path,'r'))
