@@ -72,15 +72,12 @@ def inference(args, malconv, validloader):
             if i >= args.num_iter:
                 break
 
-            cur_batch_size = val_batch_data[0].size(0)
-        
-            exe_input = val_batch_data[0].to(args.device)
-            exe_input = Variable(exe_input.long(),requires_grad=False)
-
             if args.channels_last:
                 exe_input = exe_input.to(memory_format=torch.channels_last) if len(exe_input.shape) == 4 else exe_input
             if args.jit and i == 0:
                 try:
+                    exe_input = val_batch_data[0].to(args.device)
+                    exe_input = Variable(exe_input.long(),requires_grad=False)
                     malconv = torch.jit.trace(malconv, exe_input, check_trace=False, strict=False)
                     print("---- JIT trace enable.")
                 except (RuntimeError, TypeError) as e:
@@ -88,6 +85,8 @@ def inference(args, malconv, validloader):
                     print("failed to use PyTorch jit mode due to: ", e)
    
             elapsed = time.time()
+            exe_input = val_batch_data[0].to(args.device)
+            exe_input = Variable(exe_input.long(),requires_grad=False)
             with torch.autograd.profiler_legacy.profile(enabled=args.profile, use_xpu=True, record_shapes=False) as prof:
                 pred = malconv(exe_input)
             torch.xpu.synchronize()
@@ -123,15 +122,12 @@ def inference(args, malconv, validloader):
                 if i >= args.num_iter:
                     break
 
-                cur_batch_size = val_batch_data[0].size(0)
-            
-                exe_input = val_batch_data[0].to(args.device)
-                exe_input = Variable(exe_input.long(),requires_grad=False)
-
                 if args.channels_last:
                     exe_input = exe_input.to(memory_format=torch.channels_last) if len(exe_input.shape) == 4 else exe_input
                 if args.jit and i == 0:
                     try:
+                        exe_input = val_batch_data[0].to(args.device)
+                        exe_input = Variable(exe_input.long(),requires_grad=False)
                         malconv = torch.jit.trace(malconv, exe_input, check_trace=False, strict=False)
                         print("---- JIT trace enable.")
                     except (RuntimeError, TypeError) as e:
@@ -139,6 +135,8 @@ def inference(args, malconv, validloader):
                         print("failed to use PyTorch jit mode due to: ", e)
    
                 elapsed = time.time()
+                exe_input = val_batch_data[0].to(args.device)
+                exe_input = Variable(exe_input.long(),requires_grad=False)
                 with torch.jit.fuser(fuser_mode):
                     pred = malconv(exe_input)
                 torch.cuda.synchronize()
@@ -163,15 +161,12 @@ def inference(args, malconv, validloader):
                 if i >= args.num_iter:
                     break
 
-                cur_batch_size = val_batch_data[0].size(0)
-            
-                exe_input = val_batch_data[0].to(args.device)
-                exe_input = Variable(exe_input.long(),requires_grad=False)
-
                 if args.channels_last:
                     exe_input = exe_input.to(memory_format=torch.channels_last) if len(exe_input.shape) == 4 else exe_input
                 if args.jit and i == 0:
                     try:
+                        exe_input = val_batch_data[0].to(args.device)
+                        exe_input = Variable(exe_input.long(),requires_grad=False)
                         malconv = torch.jit.trace(malconv, exe_input, check_trace=False, strict=False)
                         print("---- JIT trace enable.")
                     except (RuntimeError, TypeError) as e:
@@ -179,6 +174,8 @@ def inference(args, malconv, validloader):
                         print("failed to use PyTorch jit mode due to: ", e)
    
                 elapsed = time.time()
+                exe_input = val_batch_data[0].to(args.device)
+                exe_input = Variable(exe_input.long(),requires_grad=False)
                 pred = malconv(exe_input)
                 elapsed = time.time() - elapsed
                 p.step()
@@ -191,15 +188,12 @@ def inference(args, malconv, validloader):
             if i >= args.num_iter:
                 break
 
-            cur_batch_size = val_batch_data[0].size(0)
-        
-            exe_input = val_batch_data[0].to(args.device)
-            exe_input = Variable(exe_input.long(),requires_grad=False)
-
             if args.channels_last:
                 exe_input = exe_input.to(memory_format=torch.channels_last) if len(exe_input.shape) == 4 else exe_input
             if args.jit and i == 0:
                 try:
+                    exe_input = val_batch_data[0].to(args.device)
+                    exe_input = Variable(exe_input.long(),requires_grad=False)
                     malconv = torch.jit.trace(malconv, exe_input, check_trace=False, strict=False)
                     print("---- JIT trace enable.")
                 except (RuntimeError, TypeError) as e:
@@ -207,6 +201,8 @@ def inference(args, malconv, validloader):
                     print("failed to use PyTorch jit mode due to: ", e)
    
             elapsed = time.time()
+            exe_input = val_batch_data[0].to(args.device)
+            exe_input = Variable(exe_input.long(),requires_grad=False)
             with torch.jit.fuser(fuser_mode):
                 pred = malconv(exe_input)
             torch.cuda.synchronize()
@@ -220,15 +216,12 @@ def inference(args, malconv, validloader):
             if i >= args.num_iter:
                 break
 
-            cur_batch_size = val_batch_data[0].size(0)
-        
-            exe_input = val_batch_data[0].to(args.device)
-            exe_input = Variable(exe_input.long(),requires_grad=False)
-
             if args.channels_last:
                 exe_input = exe_input.to(memory_format=torch.channels_last) if len(exe_input.shape) == 4 else exe_input
             if args.jit and i == 0:
                 try:
+                    exe_input = val_batch_data[0].to(args.device)
+                    exe_input = Variable(exe_input.long(),requires_grad=False)
                     malconv = torch.jit.trace(malconv, exe_input, check_trace=False, strict=False)
                     print("---- JIT trace enable.")
                 except (RuntimeError, TypeError) as e:
@@ -236,6 +229,8 @@ def inference(args, malconv, validloader):
                     print("failed to use PyTorch jit mode due to: ", e)
    
             elapsed = time.time()
+            exe_input = val_batch_data[0].to(args.device)
+            exe_input = Variable(exe_input.long(),requires_grad=False)
             pred = malconv(exe_input)
             if args.device == "xpu":
                 torch.xpu.synchronize()
@@ -343,7 +338,9 @@ def main():
     
     malconv = malconv.to(args.device)
 
-    with torch.inference_mode():
+    with torch.no_grad():
+        datatype = torch.float16 if args.precision == "float16" else torch.bfloat16 if args.precision == "bfloat16" else torch.float
+        malconv = torch.xpu.optimize(model=malconv, dtype=datatype
         if args.precision == "float16" and args.device == "cuda":
             print("---- Use autocast fp16 cuda")
             with torch.cuda.amp.autocast(enabled=True, dtype=torch.float16):
