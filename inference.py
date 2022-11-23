@@ -340,8 +340,9 @@ def main():
 
     with torch.no_grad():
         malconv.eval()
-        datatype = torch.float16 if args.precision == "float16" else torch.bfloat16 if args.precision == "bfloat16" else torch.float
-        malconv = torch.xpu.optimize(model=malconv, dtype=datatype)
+        if args.device == "xpu":
+            datatype = torch.float16 if args.precision == "float16" else torch.bfloat16 if args.precision == "bfloat16" else torch.float
+            malconv = torch.xpu.optimize(model=malconv, dtype=datatype)
         if args.precision == "float16" and args.device == "cuda":
             print("---- Use autocast fp16 cuda")
             with torch.cuda.amp.autocast(enabled=True, dtype=torch.float16):
