@@ -71,7 +71,7 @@ def inference(args, malconv, validloader):
         for i, val_batch_data in enumerate(validloader):
             if i >= args.num_iter:
                 break
-
+            exe_input = val_batch_data[0]
             if args.channels_last:
                 exe_input = exe_input.to(memory_format=torch.channels_last) if len(exe_input.shape) == 4 else exe_input
             if args.jit and i == 0:
@@ -85,7 +85,7 @@ def inference(args, malconv, validloader):
                     print("failed to use PyTorch jit mode due to: ", e)
    
             elapsed = time.time()
-            exe_input = val_batch_data[0].to(args.device)
+            exe_input = exe_input.to(args.device)
             exe_input = Variable(exe_input.long(),requires_grad=False)
             with torch.autograd.profiler_legacy.profile(enabled=args.profile, use_xpu=True, record_shapes=False) as prof:
                 pred = malconv(exe_input)
@@ -122,6 +122,7 @@ def inference(args, malconv, validloader):
                 if i >= args.num_iter:
                     break
 
+                exe_input = val_batch_data[0]
                 if args.channels_last:
                     exe_input = exe_input.to(memory_format=torch.channels_last) if len(exe_input.shape) == 4 else exe_input
                 if args.jit and i == 0:
@@ -135,7 +136,7 @@ def inference(args, malconv, validloader):
                         print("failed to use PyTorch jit mode due to: ", e)
    
                 elapsed = time.time()
-                exe_input = val_batch_data[0].to(args.device)
+                exe_input = exe_input.to(args.device)
                 exe_input = Variable(exe_input.long(),requires_grad=False)
                 with torch.jit.fuser(fuser_mode):
                     pred = malconv(exe_input)
@@ -161,6 +162,7 @@ def inference(args, malconv, validloader):
                 if i >= args.num_iter:
                     break
 
+                exe_input = val_batch_data[0]
                 if args.channels_last:
                     exe_input = exe_input.to(memory_format=torch.channels_last) if len(exe_input.shape) == 4 else exe_input
                 if args.jit and i == 0:
@@ -174,7 +176,7 @@ def inference(args, malconv, validloader):
                         print("failed to use PyTorch jit mode due to: ", e)
    
                 elapsed = time.time()
-                exe_input = val_batch_data[0].to(args.device)
+                exe_input = exe_input.to(args.device)
                 exe_input = Variable(exe_input.long(),requires_grad=False)
                 pred = malconv(exe_input)
                 elapsed = time.time() - elapsed
@@ -188,6 +190,7 @@ def inference(args, malconv, validloader):
             if i >= args.num_iter:
                 break
 
+            exe_input = val_batch_data[0]
             if args.channels_last:
                 exe_input = exe_input.to(memory_format=torch.channels_last) if len(exe_input.shape) == 4 else exe_input
             if args.jit and i == 0:
@@ -201,7 +204,7 @@ def inference(args, malconv, validloader):
                     print("failed to use PyTorch jit mode due to: ", e)
    
             elapsed = time.time()
-            exe_input = val_batch_data[0].to(args.device)
+            exe_input = exe_input.to(args.device)
             exe_input = Variable(exe_input.long(),requires_grad=False)
             with torch.jit.fuser(fuser_mode):
                 pred = malconv(exe_input)
@@ -216,6 +219,7 @@ def inference(args, malconv, validloader):
             if i >= args.num_iter:
                 break
 
+            exe_input = val_batch_data[0]
             if args.channels_last:
                 exe_input = exe_input.to(memory_format=torch.channels_last) if len(exe_input.shape) == 4 else exe_input
             if args.jit and i == 0:
@@ -229,7 +233,7 @@ def inference(args, malconv, validloader):
                     print("failed to use PyTorch jit mode due to: ", e)
    
             elapsed = time.time()
-            exe_input = val_batch_data[0].to(args.device)
+            exe_input = exe_input.to(args.device)
             exe_input = Variable(exe_input.long(),requires_grad=False)
             pred = malconv(exe_input)
             if args.device == "xpu":
