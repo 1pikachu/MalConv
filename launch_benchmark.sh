@@ -9,7 +9,7 @@ function main {
     set_environment
 
     # requirements
-
+    pip install PyYAML==5.4.1
     # if multiple use 'xxx,xxx,xxx'
     model_name_list=($(echo "${model_name}" |sed 's/,/ /g'))
     batch_size_list=($(echo "${batch_size}" |sed 's/,/ /g'))
