@@ -262,7 +262,7 @@ def main():
 
     seed = args.seed
 
-    conf = yaml.load(open(args.config_path,'r'))
+    conf = yaml.safe_load(open(args.config_path,'r'))
 
     exp_name = conf['exp_name']+'_sd_'+str(seed)
     print('Experiment:')
